@@ -3,49 +3,182 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Undangan Wisuda - Perayaan Kelulusan</title>
+  <title>Undangan Wisuda - Bintang Islami, S.Kom.</title>
+  
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
+  <!-- Canvas Confetti untuk Animasi Pesta -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
   <style>
     :root {
-      --primary: #4338ca;
-      --primary-hover: #3730a3;
-      --gold: #d97706;
-      --bg: #0b0f19;
+      --primary: #4f46e5;
+      --primary-dark: #3730a3;
+      --gold: #f59e0b;
+      --gold-light: #fef3c7;
+      --dark-bg: #090d16;
       --card-bg: #ffffff;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    
+
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background: radial-gradient(circle at top, #1e1b4b, var(--bg));
+      background: radial-gradient(circle at 50% 0%, #1e1b4b 0%, var(--dark-bg) 100%);
       color: #334155;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
       min-height: 100vh;
-      padding: 24px 16px 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px 16px;
+      overflow-x: hidden;
     }
 
+    /* ================= COVER PEMBUKA (MODAL) ================= */
+    #coverScreen {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at center, #1e1b4b 0%, #030712 100%);
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+      text-align: center;
+      color: #fff;
+      transition: opacity 0.8s ease, visibility 0.8s ease, transform 0.8s ease;
+    }
+
+    #coverScreen.hide {
+      opacity: 0;
+      visibility: hidden;
+      transform: scale(1.05);
+      pointer-events: none;
+    }
+
+    .cover-badge {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      padding: 6px 18px;
+      border-radius: 999px;
+      margin-bottom: 20px;
+      background: rgba(245, 158, 11, 0.08);
+      animation: pulseGlow 2.5s infinite;
+    }
+
+    .cover-title {
+      font-family: 'Cinzel', serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 6px;
+      letter-spacing: 1px;
+    }
+
+    .cover-subtitle {
+      font-size: 14px;
+      color: #94a3b8;
+      margin-bottom: 30px;
+    }
+
+    .cover-guest-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 18px;
+      padding: 18px 24px;
+      margin-bottom: 32px;
+      width: 100%;
+      max-width: 320px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+
+    .cover-guest-card small {
+      font-size: 12px;
+      color: #94a3b8;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .cover-guest-card strong {
+      font-size: 19px;
+      color: #f8fafc;
+      font-weight: 700;
+    }
+
+    .btn-open {
+      background: linear-gradient(135deg, var(--gold) 0%, #d97706 100%);
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 14px 32px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(217, 119, 6, 0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+      animation: floatBtn 3s ease-in-out infinite;
+    }
+
+    .btn-open:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(217, 119, 6, 0.6);
+    }
+
+    /* ================= MAIN CONTAINER ================= */
     .container {
       width: 100%;
       max-width: 440px;
-      animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .card {
       background: var(--card-bg);
-      border-radius: 28px;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      border-radius: 30px;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.6);
       text-align: center;
-      padding: 36px 24px;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 40px 24px 32px;
+      position: relative;
     }
 
+    /* FOTO WISUDAWAN DENGAN ANIMASI AURA */
+    .avatar-wrapper {
+      position: relative;
+      width: 140px;
+      height: 140px;
+      margin: 0 auto 24px;
+    }
+
+    .avatar-wrapper::before {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #6366f1, var(--gold), #4f46e5);
+      z-index: 1;
+      animation: rotateGlow 6s linear infinite;
+      filter: blur(4px);
+    }
+
+    .avatar-img {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      z-index: 2;
+      border: 4px solid #ffffff;
+      background: #e2e8f0;
+    }
+
+    /* TEXT HEADINGS */
     .badge {
       display: inline-block;
       background: #eef2ff;
@@ -56,93 +189,119 @@
       padding: 6px 16px;
       border-radius: 999px;
       text-transform: uppercase;
-      margin-bottom: 24px;
-    }
-
-    /* Kotak Tamu Dinamis */
-    .recipient-box {
-      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-      border: 1.5px dashed #cbd5e1;
-      border-radius: 16px;
-      padding: 16px;
-      margin-bottom: 24px;
-    }
-
-    .recipient-label {
-      font-size: 12px;
-      color: #64748b;
-      margin-bottom: 4px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .recipient-name {
-      font-size: 20px;
-      font-weight: 700;
-      color: #0f172a;
-    }
-
-    /* Foto Wisudawan */
-    .avatar-wrapper {
-      position: relative;
-      width: 130px;
-      height: 130px;
-      margin: 0 auto 20px;
-    }
-
-    .avatar-img {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      object-fit: cover;
-      box-shadow: 0 10px 25px rgba(67, 56, 202, 0.25);
-      border: 4px solid #ffffff;
-      outline: 3px solid #e0e7ff;
-    }
-
-    .subtitle {
-      font-size: 13px;
-      color: #64748b;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-bottom: 4px;
+      margin-bottom: 12px;
     }
 
     .title {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Cinzel', serif;
       font-size: 24px;
+      font-weight: 700;
       color: #0f172a;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     .graduate-name {
-      font-size: 18px;
-      font-weight: 700;
+      font-size: 20px;
+      font-weight: 800;
       color: var(--primary);
       margin-bottom: 20px;
     }
 
+    /* KOTAK TAMU DI DALAM KARTU */
+    .recipient-box {
+      background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+      border: 1.5px dashed #cbd5e1;
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 24px;
+    }
+
+    .recipient-label {
+      font-size: 11px;
+      color: #64748b;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+
+    .recipient-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    /* HITUNG MUNDUR (COUNTDOWN) */
+    .countdown-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 600;
+      color: #64748b;
+      margin-bottom: 10px;
+    }
+
+    .countdown-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .countdown-item {
+      background: #f1f5f9;
+      border-radius: 12px;
+      padding: 10px 4px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .countdown-num {
+      font-size: 18px;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.2;
+    }
+
+    .countdown-label {
+      font-size: 10px;
+      color: #64748b;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    /* DETAIL ACARA */
     .details-card {
       background: #f8fafc;
-      border-radius: 16px;
+      border-radius: 18px;
       padding: 20px;
       text-align: left;
       font-size: 14px;
       line-height: 1.7;
       color: #475569;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       border: 1px solid #e2e8f0;
     }
 
     .details-item {
       display: flex;
-      margin-bottom: 8px;
+      align-items: flex-start;
+      margin-bottom: 10px;
     }
+
     .details-item:last-child { margin-bottom: 0; }
+
     .details-icon {
       font-size: 16px;
       margin-right: 12px;
-      min-width: 20px;
+      min-width: 22px;
+      margin-top: 2px;
+    }
+
+    /* BUTTONS */
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
 
     .btn {
@@ -151,30 +310,36 @@
       justify-content: center;
       gap: 8px;
       width: 100%;
-      background: var(--primary);
-      color: #ffffff;
       text-decoration: none;
-      padding: 14px;
+      padding: 13px;
       border-radius: 14px;
       font-weight: 600;
       font-size: 14px;
-      transition: all 0.2s ease;
-      box-shadow: 0 4px 12px rgba(67, 56, 202, 0.25);
-      border: none;
+      transition: all 0.25s ease;
       cursor: pointer;
+      border: none;
     }
 
-    .btn:hover {
-      background: var(--primary-hover);
-      transform: translateY(-1px);
+    .btn-maps {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3);
     }
+    .btn-maps:hover { background: var(--primary-dark); transform: translateY(-1px); }
 
-    /* Kotak Generator Link (Khusus Kamu untuk buat link tamu) */
+    .btn-calendar {
+      background: #ffffff;
+      color: #1e293b;
+      border: 1.5px solid #cbd5e1;
+    }
+    .btn-calendar:hover { background: #f8fafc; border-color: #94a3b8; }
+
+    /* GENERATOR LINK PANEL */
     .generator-card {
-      margin-top: 24px;
-      background: rgba(255, 255, 255, 0.08);
+      margin-top: 20px;
+      background: rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: 20px;
       padding: 20px;
       color: #ffffff;
@@ -182,9 +347,9 @@
     }
 
     .generator-card h3 {
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 4px;
       color: #f1f5f9;
       display: flex;
       align-items: center;
@@ -192,19 +357,20 @@
     }
 
     .generator-card p {
-      font-size: 12px;
+      font-size: 11px;
       color: #94a3b8;
       margin-bottom: 12px;
+      line-height: 1.4;
     }
 
     .input-field {
       width: 100%;
       padding: 12px 14px;
-      border-radius: 10px;
+      border-radius: 12px;
       border: 1px solid #475569;
-      background: rgba(15, 23, 42, 0.6);
+      background: rgba(15, 23, 42, 0.7);
       color: #fff;
-      font-size: 14px;
+      font-size: 13px;
       outline: none;
       margin-bottom: 10px;
     }
@@ -216,9 +382,25 @@
     .btn-wa {
       background: #16a34a;
       color: white;
-      margin-top: 8px;
+      box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
     }
     .btn-wa:hover { background: #15803d; }
+
+    /* KEYFRAMES ANIMASI */
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.8; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.03); }
+    }
+
+    @keyframes rotateGlow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes floatBtn {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
@@ -228,19 +410,29 @@
 </head>
 <body>
 
+  <!-- ================= COVER LAYAR AWAL ================= -->
+  <div id="coverScreen">
+    <div class="cover-badge">Official Invitation</div>
+    <h1 class="cover-title">Walimatul Khitman</h1>
+    <p class="cover-subtitle">Perayaan Wisuda Sarjana</p>
+
+    <div class="cover-guest-card">
+      <small>Kepada Yth. Bapak/Ibu/Saudara/i:</small>
+      <strong id="coverGuestName">Tamu Undangan</strong>
+    </div>
+
+    <button class="btn-open" onclick="bukaUndangan()">
+      🎓 Buka Undangan
+    </button>
+  </div>
+
+  <!-- ================= KARTU UTAMA UNDANGAN ================= -->
   <div class="container">
     <div class="card">
-      <span class="badge">Official Invitation</span>
+      <span class="badge">Tasyakuran Wisuda</span>
 
-      <!-- Box Penerima Tamu -->
-      <div class="recipient-box">
-        <div class="recipient-label">Spesial Mengundang:</div>
-        <div class="recipient-name" id="guestName">Tamu Undangan</div>
-      </div>
-
-      <!-- Foto Wisudawan -->
+      <!-- Foto dengan Efek Glow Berputar -->
       <div class="avatar-wrapper">
-        <!-- Jika foto.jpg ada di repo, foto kamu akan muncul. Jika belum ada, akan pakai foto placeholder -->
         <img 
           src="Bintang.png" 
           alt="Foto Wisudawan" 
@@ -249,25 +441,47 @@
         />
       </div>
 
-      <div class="subtitle">Perayaan Wisuda Sarjana</div>
-      <h1 class="title">Tasyakuran Wisuda</h1>
-      
-      <!-- Ganti Nama & Gelar Kamu di sini -->
-      <div class="graduate-name">Bintang Islami, S.Kom.</div>
+      <h1 class="title">Bintang Islami, S.Kom.</h1>
+      <div class="graduate-name" style="font-size: 14px; font-weight: 500; color: #64748b; margin-bottom: 18px;">
+        Program Studi Sistem Informasi
+      </div>
 
-      <!-- Detail Acara -->
-      <div class="details-card">
-        <div class="details-item">
-          <span class="details-icon">🎓</span>
-          <div><strong>Program Studi:</strong> Sistem Informasi</div>
+      <!-- Kotak Penerima Tamu di Kartu -->
+      <div class="recipient-box">
+        <div class="recipient-label">Turut Mengundang Kehadiran:</div>
+        <div class="recipient-name" id="guestName">Tamu Undangan</div>
+      </div>
+
+      <!-- Hitung Mundur Waktu -->
+      <div class="countdown-title">⏳ Menuju Hari Bahagia</div>
+      <div class="countdown-grid">
+        <div class="countdown-item">
+          <div class="countdown-num" id="days">00</div>
+          <div class="countdown-label">Hari</div>
         </div>
+        <div class="countdown-item">
+          <div class="countdown-num" id="hours">00</div>
+          <div class="countdown-label">Jam</div>
+        </div>
+        <div class="countdown-item">
+          <div class="countdown-num" id="minutes">00</div>
+          <div class="countdown-label">Menit</div>
+        </div>
+        <div class="countdown-item">
+          <div class="countdown-num" id="seconds">00</div>
+          <div class="countdown-label">Detik</div>
+        </div>
+      </div>
+
+      <!-- Rincian Detail Acara -->
+      <div class="details-card">
         <div class="details-item">
           <span class="details-icon">🏛</span>
           <div><strong>Kampus:</strong> Universitas Dharmas Indonesia</div>
         </div>
         <div class="details-item">
           <span class="details-icon">🗓</span>
-          <div><strong>Tanggal:</strong> Sabtu, 12 September 2026</div>
+          <div><strong>Hari/Tanggal:</strong> Sabtu, 12 September 2026</div>
         </div>
         <div class="details-item">
           <span class="details-icon">⏰</span>
@@ -279,16 +493,27 @@
         </div>
       </div>
 
-      <!-- Tombol Peta -->
-      <a href="https://maps.app.goo.gl/AfNGh2tSTewBWKz17">
-        📍 Buka Peta Google Maps
-      </a>
+      <!-- Tombol Aksi -->
+      <div class="button-group">
+        <a href="https://maps.app.goo.gl/AfNGh2tSTewBWKz17" target="_blank" rel="noopener noreferrer" class="btn btn-maps">
+          📍 Buka Peta Google Maps
+        </a>
+
+        <!-- Tombol Tambahkan ke Google Calendar Otomatis -->
+        <a 
+          href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Wisuda+Bintang+Islami,+S.Kom.&dates=20260912T010000Z/20260912T060000Z&details=Tasyakuran+Wisuda+Bintang+Islami,+S.Kom.+Program+Studi+Sistem+Informasi&location=Audit+Kampus+Undhari" 
+          target="_blank" 
+          class="btn btn-calendar"
+        >
+          📅 Simpan ke Google Calendar
+        </a>
+      </div>
     </div>
 
-    <!-- PANEL KHUSUS: Generator Link Tamu Otomatis -->
+    <!-- PANEL GENERATOR WHATSAPP KHUSUS PEMBUAT UNDANGAN -->
     <div class="generator-card">
       <h3>✨ Generator Link WhatsApp Tamu</h3>
-      <p>Ketik nama tamu di bawah untuk langsung buat link dan kirim ke WhatsApp tanpa edit kodingan:</p>
+      <p>Ketik nama tamu di bawah untuk membuat link ber-nama otomatis dan langsung kirim ke WhatsApp:</p>
       
       <input type="text" id="inputNama" class="input-field" placeholder="Contoh: Pak Budi Santoso / Siti & Partner">
       
@@ -299,30 +524,621 @@
   </div>
 
   <script>
-    // 1. Logika membaca nama tamu dari URL
+    // 1. TANGKAP NAMA DARI URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const guest = urlParams.get('to');
+    if (guest) {
+      const decodedGuest = decodeURIComponent(guest);
+      document.getElementById('guestName').innerText = decodedGuest;
+      document.getElementById('coverGuestName').innerText = decodedGuest;
+    }
+
+    // 2. FUNGSI BUKA UNDANGAN & EFEK KONFETI
+    function bukaUndangan() {
+      // Sembunyikan cover
+      document.getElementById('coverScreen').classList.add('hide');
+
+      // Tembakkan animasi konfeti perayaan
+      const duration = 2.5 * 1000;
+      const end = Date.now() + duration;
+
+      (function frame() {
+        confetti({
+          particleCount: 4,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 }
+        });
+        confetti({
+          particleCount: 4,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 }
+        });
+
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      }());
+    }
+
+    // 3. LOGIKA HITUNG MUNDUR (COUNTDOWN KE 12 SEPTEMBER 2026)
+    const targetDate = new Date('September 12, 2026 08:00:00 GMT+0700').getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance < 0) {
+        document.getElementById('days').innerText = "00";
+        document.getElementById('hours').innerText = "00";
+        document.getElementById('minutes').innerText = "00";
+        document.getElementById('seconds').innerText = "00";
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60))Kodingan kamu sudah dipercantik secara menyeluruh. Tampilannya kini setara dengan undangan digital premium berbayar, lengkap dengan animasi modern.
+
+### ✨ Fitur Baru yang Ditambahkan:
+1. **Animasi Hujan Confetti (Pesta Kelulusan):** Begitu website dibuka, layar otomatis menghujani confetti warna-warni selebrasi wisuda.
+2. **Hitung Mundur (*Countdown Timer*):** Menghitung mundur otomatis (Hari, Jam, Menit, Detik) menuju **12 September 2026**.
+3. **Bingkai Foto Animasi (*Glowing Aura*):** Foto kamu dikelilingi efek cincin cahaya gradasi yang berputar halus.
+4. **Perbaikan Tombol Maps:** Tombol Google Maps ke *Audit Kampus Undhari* sekarang tampil cantik dan responsif.
+5. **Tombol "Salin Link":** Selain kirim ke WhatsApp, ada tombol praktis untuk langsung menyalin tautan tamu ke *clipboard*.
+
+---
+
+### Kode Lengkap Baru (`index.html`)
+
+Silakan salin seluruh kode di bawah ini, lalu ganti isi file `index.html` di GitHub kamu:
+
+```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Undangan Wisuda - Bintang Islami, S.Kom.</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)">
+  <link rel="preconnect" href="[https://fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin>
+  <link href="[https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap](https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap)" rel="stylesheet">
+  
+  <!-- Library Confetti untuk Animasi Pesta Wisuda -->
+  <script src="[https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js](https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js)"></script>
+
+  <style>
+    :root {
+      --primary: #4338ca;
+      --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
+      --gold-gradient: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      --bg: #0b0f19;
+      --card-bg: rgba(255, 255, 255, 0.96);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: radial-gradient(circle at 50% 0%, #1e1b4b 0%, var(--bg) 80%);
+      color: #334155;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 24px 16px 60px;
+      overflow-x: hidden;
+    }
+
+    /* Container Utama dengan Animasi Halus Muncul ke Atas */
+    .container {
+      width: 100%;
+      max-width: 440px;
+      animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 32px;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.15);
+      text-align: center;
+      padding: 38px 24px;
+      position: relative;
+    }
+
+    /* Lencana Undangan */
+    .badge {
+      display: inline-block;
+      background: #eef2ff;
+      color: var(--primary);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      padding: 6px 18px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      box-shadow: 0 2px 8px rgba(79, 70, 229, 0.12);
+      margin-bottom: 22px;
+    }
+
+    /* Kotak Tamu Dinamis */
+    .recipient-box {
+      background: linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%);
+      border: 1.5px dashed #cbd5e1;
+      border-radius: 18px;
+      padding: 16px 14px;
+      margin-bottom: 24px;
+      transition: transform 0.2s ease;
+    }
+    .recipient-box:hover {
+      transform: translateY(-2px);
+    }
+
+    .recipient-label {
+      font-size: 11px;
+      color: #64748b;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 600;
+    }
+
+    .recipient-name {
+      font-size: 21px;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    /* Avatar Foto dengan Efek Cincin Cahaya Berputar */
+    .avatar-wrapper {
+      position: relative;
+      width: 140px;
+      height: 140px;
+      margin: 0 auto 22px;
+    }
+
+    .avatar-wrapper::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #4f46e5, #f59e0b, #4f46e5);
+      background-size: 200% 200%;
+      animation: spinGlow 4s linear infinite;
+      z-index: 1;
+    }
+
+    .avatar-img {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #ffffff;
+      background: #e2e8f0;
+      z-index: 2;
+    }
+
+    .subtitle {
+      font-size: 12px;
+      font-weight: 700;
+      color: #d97706;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .title {
+      font-family: 'Cinzel', serif;
+      font-size: 23px;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .graduate-name {
+      font-size: 19px;
+      font-weight: 800;
+      color: #4338ca;
+      margin-bottom: 22px;
+    }
+
+    /* Hitung Mundur (Countdown Timer) */
+    .countdown-container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+
+    .countdown-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 10px 4px;
+    }
+
+    .countdown-number {
+      font-size: 18px;
+      font-weight: 800;
+      color: #1e1b4b;
+    }
+
+    .countdown-text {
+      font-size: 10px;
+      color: #64748b;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    /* Rincian Acara */
+    .details-card {
+      background: #f8fafc;
+      border-radius: 18px;
+      padding: 20px;
+      text-align: left;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #475569;
+      margin-bottom: 22px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .details-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+    .details-item:last-child { margin-bottom: 0; }
+    
+    .details-icon {
+      font-size: 18px;
+      margin-right: 12px;
+      min-width: 24px;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* Tombol Utama */
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      background: var(--primary-gradient);
+      color: #ffffff;
+      text-decoration: none;
+      padding: 14px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 14px;
+      transition: all 0.25s ease;
+      box-shadow: 0 6px 18px rgba(79, 70, 229, 0.35);
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(79, 70, 229, 0.45);
+    }
+
+    /* Tombol Pesta Confetti */
+    .btn-celebrate {
+      background: transparent;
+      border: 1px solid #e2e8f0;
+      color: #64748b;
+      margin-top: 12px;
+      font-size: 12px;
+      padding: 10px;
+      border-radius: 12px;
+      box-shadow: none;
+    }
+    .btn-celebrate:hover {
+      background: #f8fafc;
+      color: #1e293b;
+      box-shadow: none;
+    }
+
+    /* Kotak Generator Link WhatsApp Tamu */
+    .generator-card {
+      margin-top: 24px;
+      background: rgba(255, 255, 255, 0.07);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 24px;
+      padding: 22px;
+      color: #ffffff;
+      text-align: left;
+    }
+
+    .generator-card h3 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #f8fafc;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .generator-card p {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 13px 16px;
+      border-radius: 12px;
+      border: 1px solid #475569;
+      background: rgba(15, 23, 42, 0.75);
+      color: #ffffff;
+      font-size: 14px;
+      outline: none;
+      margin-bottom: 10px;
+      transition: border-color 0.2s;
+    }
+
+    .input-field:focus {
+      border-color: #818cf8;
+    }
+
+    .btn-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .btn-wa {
+      background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+      box-shadow: 0 4px 14px rgba(34, 197, 94, 0.3);
+    }
+    .btn-wa:hover {
+      box-shadow: 0 6px 18px rgba(34, 197, 94, 0.45);
+    }
+
+    .btn-copy {
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: none;
+    }
+    .btn-copy:hover {
+      background: rgba(255, 255, 255, 0.25);
+      box-shadow: none;
+    }
+
+    /* Notifikasi Salin Link (Toast) */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      background: #10b981;
+      color: #ffffff;
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+      pointer-events: none;
+      z-index: 99;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Animasi Keyframes */
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes spinGlow {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="card">
+      <span class="badge">Official Invitation</span>
+
+      <!-- Box Penerima Tamu Dinamis -->
+      <div class="recipient-box">
+        <div class="recipient-label">Spesial Mengundang:</div>
+        <div class="recipient-name" id="guestName">Tamu Undangan</div>
+      </div>
+
+      <!-- Foto Wisudawan dengan Lingkaran Animasi Cahaya -->
+      <div class="avatar-wrapper">
+        <img 
+          src="Bintang.png" 
+          alt="Bintang Islami, S.Kom." 
+          class="avatar-img"
+        />
+      </div>
+
+      <div class="subtitle">Perayaan Wisuda Sarjana</div>
+      <h1 class="title">Tasyakuran Wisuda</h1>
+      <div class="graduate-name">Bintang Islami, S.Kom.</div>
+
+      <!-- Hitung Mundur ke 12 September 2026 -->
+      <div class="countdown-container">
+        <div class="countdown-box">
+          <div class="countdown-number" id="days">0</div>
+          <div class="countdown-text">Hari</div>
+        </div>
+        <div class="countdown-box">
+          <div class="countdown-number" id="hours">0</div>
+          <div class="countdown-text">Jam</div>
+        </div>
+        <div class="countdown-box">
+          <div class="countdown-number" id="minutes">0</div>
+          <div class="countdown-text">Menit</div>
+        </div>
+        <div class="countdown-box">
+          <div class="countdown-number" id="seconds">0</div>
+          <div class="countdown-text">Detik</div>
+        </div>
+      </div>
+
+      <!-- Rincian Acara -->
+      <div class="details-card">
+        <div class="details-item">
+          <span class="details-icon">🎓</span>
+          <div><strong>Program Studi:</strong> Sistem Informasi</div>
+        </div>
+        <div class="details-item">
+          <span class="details-icon">🏛</span>
+          <div><strong>Kampus:</strong> Universitas Dharmas Indonesia</div>
+        </div>
+        <div class="details-item">
+          <span class="details-icon">🗓</span>
+          <div><strong>Hari/Tanggal:</strong> Sabtu, 12 September 2026</div>
+        </div>
+        <div class="details-item">
+          <span class="details-icon">⏰</span>
+          <div><strong>Waktu:</strong> 08.00 WIB - Selesai</div>
+        </div>
+        <div class="details-item">
+          <span class="details-icon">📍</span>
+          <div><strong>Lokasi:</strong> Audit Kampus Undhari</div>
+        </div>
+      </div>
+
+      <!-- Tombol Peta Google Maps -->
+      <a href="[https://maps.app.goo.gl/AfNGh2tSTewBWKz17](https://maps.app.goo.gl/AfNGh2tSTewBWKz17)" target="_blank" class="btn">
+        📍 Buka Lokasi di Google Maps
+      </a>
+
+      <!-- Tombol Letuskan Confetti -->
+      <button class="btn btn-celebrate" onclick="triggerConfetti()">
+        🎉 Rayakan & Letuskan Confetti
+      </button>
+    </div>
+
+    <!-- PANEL KHUSUS: Generator Link WhatsApp & Salin Tautan -->
+    <div class="generator-card">
+      <h3>✨ Generator Link Tamu</h3>
+      <p>Ketik nama tamu di bawah untuk langsung membagikan undangan tanpa perlu mengubah kodingan:</p>
+      
+      <input type="text" id="inputNama" class="input-field" placeholder="Ketik nama tamu (cth: Pak Joko / Rian & Partner)">
+      
+      <div class="btn-group">
+        <button class="btn btn-wa" onclick="bagikanWhatsApp()">
+          💬 Kirim WhatsApp
+        </button>
+        <button class="btn btn-copy" onclick="salinLink()">
+          🔗 Salin Link
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast">Link berhasil disalin! 📋</div>
+
+  <script>
+    // 1. Ambil Parameter Nama Tamu dari URL
     const urlParams = new URLSearchParams(window.location.search);
     const guest = urlParams.get('to');
     if (guest) {
       document.getElementById('guestName').innerText = decodeURIComponent(guest);
     }
 
-    // 2. Logika Generator WhatsApp instan
-    function bagikanWhatsApp() {
+    // 2. Animasi Hujan Confetti Otomatis saat Web Dibuka
+    window.addEventListener('DOMContentLoaded', () => {
+      triggerConfetti();
+    });
+
+    function triggerConfetti() {
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 80,
+          spread: 70,
+          origin: { y: 0.6 }
+        });
+      }
+    }
+
+    // 3. Hitung Mundur (Countdown) ke 12 September 2026 08:00:00 WIB
+    const targetDate = new Date('2026-09-12T08:00:00+07:00').getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance > 0) {
+        const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById('days').innerText = d;
+        document.getElementById('hours').innerText = h;
+        document.getElementById('minutes').innerText = m;
+        document.getElementById('seconds').innerText = s;
+      }
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // 4. Buat Link Khusus Tamu
+    function getGuestUrl() {
       const nama = document.getElementById('inputNama').value.trim();
       if (!nama) {
         alert("Silakan ketik nama tamu terlebih dahulu!");
-        return;
+        return null;
       }
-      
-      // Ambil link website saat ini tanpa parameter lama
       const baseUrl = window.location.origin + window.location.pathname;
-      const finalUrl = `${baseUrl}?to=${encodeURIComponent(nama)}`;
+      return {
+        nama: nama,
+        url: `${baseUrl}?to=${encodeURIComponent(nama)}`
+      };
+    }
+
+    // 5. Bagikan Langsung ke WhatsApp
+    function bagikanWhatsApp() {
+      const data = getGuestUrl();
+      if (!data) return;
+
+      const pesan = `Kepada Yth. ${data.nama},\n\nTanpa mengurangi rasa hormat, kami bermaksud mengundang Anda untuk menghadiri perayaan Tasyakuran Wisuda saya (Bintang Islami, S.Kom.).\n\nUntuk detail lengkap acara, silakan buka tautan undangan berikut:\n${data.url}\n\nMerupakan suatu kehormatan dan kebahagiaan bagi kami apabila Anda berkenan hadir. Terima kasih!`;
       
-      const pesan = `Halo ${nama}, kami mengundang Anda untuk hadir di momen wisuda saya. Klik tautan undangan berikut:\n\n${finalUrl}`;
-      
-      // Buka WhatsApp
-      const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(pesan)}`;
+      const waUrl = `[https://api.whatsapp.com/send?text=$](https://api.whatsapp.com/send?text=$){encodeURIComponent(pesan)}`;
       window.open(waUrl, '_blank');
+    }
+
+    // 6. Fitur Salin Link (Copy Link)
+    function salinLink() {
+      const data = getGuestUrl();
+      if (!data) return;
+
+      navigator.clipboard.writeText(data.url).then(() => {
+        showToast("Tautan untuk " + data.nama + " berhasil disalin!");
+      });
+    }
+
+    function showToast(pesan) {
+      const toast = document.getElementById('toast');
+      toast.innerText = pesan;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
     }
   </script>
 
