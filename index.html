@@ -3,127 +3,326 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Undangan Wisuda</title>
+  <title>Undangan Wisuda - Perayaan Kelulusan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+  
   <style>
+    :root {
+      --primary: #4338ca;
+      --primary-hover: #3730a3;
+      --gold: #d97706;
+      --bg: #0b0f19;
+      --card-bg: #ffffff;
+    }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #0f172a;
-      color: #333;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: radial-gradient(circle at top, #1e1b4b, var(--bg));
+      color: #334155;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
       min-height: 100vh;
-      padding: 20px 16px;
+      padding: 24px 16px 50px;
     }
-    .card {
-      background: #ffffff;
+
+    .container {
       width: 100%;
-      max-width: 420px;
-      border-radius: 20px;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+      max-width: 440px;
+      animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 28px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
       text-align: center;
       padding: 36px 24px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
+
     .badge {
       display: inline-block;
-      background: #e0e7ff;
-      color: #4338ca;
+      background: #eef2ff;
+      color: var(--primary);
       font-size: 11px;
       font-weight: 700;
       letter-spacing: 1.5px;
-      padding: 6px 14px;
-      border-radius: 20px;
-      margin-bottom: 20px;
+      padding: 6px 16px;
+      border-radius: 999px;
       text-transform: uppercase;
+      margin-bottom: 24px;
     }
+
+    /* Kotak Tamu Dinamis */
     .recipient-box {
-      background: #f8fafc;
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
       border: 1.5px dashed #cbd5e1;
-      border-radius: 12px;
+      border-radius: 16px;
       padding: 16px;
-      margin: 16px 0 24px;
+      margin-bottom: 24px;
     }
+
     .recipient-label {
       font-size: 12px;
       color: #64748b;
       margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
+
     .recipient-name {
-      font-size: 19px;
+      font-size: 20px;
       font-weight: 700;
       color: #0f172a;
     }
-    h1 {
-      font-size: 22px;
-      color: #1e293b;
+
+    /* Foto Wisudawan */
+    .avatar-wrapper {
+      position: relative;
+      width: 130px;
+      height: 130px;
+      margin: 0 auto 20px;
+    }
+
+    .avatar-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 10px 25px rgba(67, 56, 202, 0.25);
+      border: 4px solid #ffffff;
+      outline: 3px solid #e0e7ff;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: #64748b;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .title {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      color: #0f172a;
       margin-bottom: 6px;
     }
+
     .graduate-name {
       font-size: 18px;
       font-weight: 700;
-      color: #4338ca;
+      color: var(--primary);
       margin-bottom: 20px;
     }
-    .details {
-      font-size: 14px;
-      color: #475569;
-      line-height: 1.7;
-      margin-bottom: 24px;
+
+    .details-card {
       background: #f8fafc;
-      padding: 16px;
-      border-radius: 12px;
+      border-radius: 16px;
+      padding: 20px;
       text-align: left;
+      font-size: 14px;
+      line-height: 1.7;
+      color: #475569;
+      margin-bottom: 24px;
+      border: 1px solid #e2e8f0;
     }
+
+    .details-item {
+      display: flex;
+      margin-bottom: 8px;
+    }
+    .details-item:last-child { margin-bottom: 0; }
+    .details-icon {
+      font-size: 16px;
+      margin-right: 12px;
+      min-width: 20px;
+    }
+
     .btn {
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
       width: 100%;
-      background: #4338ca;
+      background: var(--primary);
       color: #ffffff;
       text-decoration: none;
-      padding: 12px 0;
-      border-radius: 10px;
+      padding: 14px;
+      border-radius: 14px;
       font-weight: 600;
       font-size: 14px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(67, 56, 202, 0.25);
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    /* Kotak Generator Link (Khusus Kamu untuk buat link tamu) */
+    .generator-card {
+      margin-top: 24px;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      padding: 20px;
+      color: #ffffff;
+      text-align: left;
+    }
+
+    .generator-card h3 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #f1f5f9;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .generator-card p {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-bottom: 12px;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid #475569;
+      background: rgba(15, 23, 42, 0.6);
+      color: #fff;
+      font-size: 14px;
+      outline: none;
+      margin-bottom: 10px;
+    }
+
+    .input-field:focus {
+      border-color: #818cf8;
+    }
+
+    .btn-wa {
+      background: #16a34a;
+      color: white;
+      margin-top: 8px;
+    }
+    .btn-wa:hover { background: #15803d; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
 
-  <div class="card">
-    <span class="badge">Undangan Wisuda</span>
-    
-    <!-- Kotak Nama Tamu Dinamis -->
-    <div class="recipient-box">
-      <div class="recipient-label">Kepada Yth. Bapak/Ibu/Saudara/i:</div>
-      <div class="recipient-name" id="guestName">Tamu Undangan</div>
+  <div class="container">
+    <div class="card">
+      <span class="badge">Official Invitation</span>
+
+      <!-- Box Penerima Tamu -->
+      <div class="recipient-box">
+        <div class="recipient-label">Spesial Mengundang:</div>
+        <div class="recipient-name" id="guestName">Tamu Undangan</div>
+      </div>
+
+      <!-- Foto Wisudawan -->
+      <div class="avatar-wrapper">
+        <!-- Jika foto.jpg ada di repo, foto kamu akan muncul. Jika belum ada, akan pakai foto placeholder -->
+        <img 
+          src="Bintang.PNG" 
+          alt="Foto Wisudawan" 
+          class="avatar-img"
+          onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&q=80'"
+        />
+      </div>
+
+      <div class="subtitle">Perayaan Wisuda Sarjana</div>
+      <h1 class="title">Walimatul Khitman</h1>
+      
+      <!-- Ganti Nama & Gelar Kamu di sini -->
+      <div class="graduate-name">Bintang Islami, S.Kom.</div>
+
+      <!-- Detail Acara -->
+      <div class="details-card">
+        <div class="details-item">
+          <span class="details-icon">🎓</span>
+          <div><strong>Program Studi:</strong> Sistem Informasi</div>
+        </div>
+        <div class="details-item">
+          <span class="details-icon">🏛</span>
+          <div><strong>Kampus:</strong> Universitas Dharmas Indonesia</div>
+        </div>
+        <div class="details-item">
+          <span class="details-icon">🗓</span>
+          <div><strong>Tanggal:</strong> Sabtu, 12 September 2026</div>
+        </div>
+        <div class="details-item">
+          <span class="details-icon">⏰</span>
+          <div><strong>Waktu:</strong> 08.00 WIB - Selesai</div>
+        </div>
+        <div class="details-item">
+          <span class="details-icon">📍</span>
+          <div><strong>Lokasi:</strong> Audit Kampus Undhari</div>
+        </div>
+      </div>
+
+      <!-- Tombol Peta -->
+      <a href="https://maps.app.goo.gl/AfNGh2tSTewBWKz17">
+        📍 Buka Peta Google Maps
+      </a>
     </div>
 
-    <h1>Perayaan Kelulusan</h1>
-    <!-- Ganti Nama Kamu di bawah ini -->
-    <div class="graduate-name">Bintang Islami, S.Kom.</div>
-
-    <!-- Ganti Info Acara di bawah ini -->
-    <div class="details">
-      🎓 <strong>Program Studi:</strong> Sistem Informasi<br />
-      🏛 <strong>Kampus:</strong> Universitas Dharmas Indonesia<br />
-      🗓 <strong>Hari/Tanggal:</strong> Sabtu, 12 September 2026<br />
-      ⏰ <strong>Waktu:</strong> 08.00 WIB - Selesai<br />
-      📍 <strong>Lokasi:</strong> Audit Kampus Undhari
+    <!-- PANEL KHUSUS: Generator Link Tamu Otomatis -->
+    <div class="generator-card">
+      <h3>✨ Generator Link WhatsApp Tamu</h3>
+      <p>Ketik nama tamu di bawah untuk langsung buat link dan kirim ke WhatsApp tanpa edit kodingan:</p>
+      
+      <input type="text" id="inputNama" class="input-field" placeholder="Contoh: Pak Budi Santoso / Siti & Partner">
+      
+      <button class="btn btn-wa" onclick="bagikanWhatsApp()">
+        💬 Kirim Undangan via WhatsApp
+      </button>
     </div>
-
-    <!-- Tautan Google Maps -->
-    <a href="https://maps.app.goo.gl/AfNGh2tSTewBWKz17">📍 Buka Peta Lokasi</a>
   </div>
 
   <script>
-    // Membaca parameter "?to=" dari alamat URL
+    // 1. Logika membaca nama tamu dari URL
     const urlParams = new URLSearchParams(window.location.search);
     const guest = urlParams.get('to');
-    
-    // Jika ada parameter "?to=", ganti tulisan "Tamu Undangan"
     if (guest) {
-      document.getElementById('guestName').innerText = guest;
+      document.getElementById('guestName').innerText = decodeURIComponent(guest);
+    }
+
+    // 2. Logika Generator WhatsApp instan
+    function bagikanWhatsApp() {
+      const nama = document.getElementById('inputNama').value.trim();
+      if (!nama) {
+        alert("Silakan ketik nama tamu terlebih dahulu!");
+        return;
+      }
+      
+      // Ambil link website saat ini tanpa parameter lama
+      const baseUrl = window.location.origin + window.location.pathname;
+      const finalUrl = `${baseUrl}?to=${encodeURIComponent(nama)}`;
+      
+      const pesan = `Halo ${nama}, kami mengundang Anda untuk hadir di momen wisuda saya. Klik tautan undangan berikut:\n\n${finalUrl}`;
+      
+      // Buka WhatsApp
+      const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(pesan)}`;
+      window.open(waUrl, '_blank');
     }
   </script>
 
