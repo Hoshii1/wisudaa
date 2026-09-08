@@ -5,12 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Undangan Wisuda - Bintang Islami, S.Kom.</title>
   
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
-  <!-- Library Confetti untuk Animasi Pesta Wisuda -->
+  <!-- Library Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
 
   <style>
@@ -33,11 +32,11 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 24px 16px 60px;
+      padding: 24px 16px 40px;
       overflow-x: hidden;
     }
 
-    /* ================= COVER PEMBUKA ================= */
+    /* COVER LAYAR DEPAN */
     #coverScreen {
       position: fixed;
       inset: 0;
@@ -129,7 +128,7 @@
       box-shadow: 0 12px 30px rgba(217, 119, 6, 0.65);
     }
 
-    /* ================= KARTU UTAMA ================= */
+    /* KARTU UTAMA */
     .container {
       width: 100%;
       max-width: 440px;
@@ -158,7 +157,6 @@
       margin-bottom: 22px;
     }
 
-    /* Avatar Foto dengan Efek Cincin Cahaya */
     .avatar-wrapper {
       position: relative;
       width: 140px;
@@ -211,7 +209,6 @@
       margin-bottom: 20px;
     }
 
-    /* Box Nama Tamu */
     .recipient-box {
       background: linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%);
       border: 1.5px dashed #cbd5e1;
@@ -235,7 +232,6 @@
       color: #0f172a;
     }
 
-    /* Hitung Mundur (Countdown) */
     .countdown-container {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -264,7 +260,6 @@
       margin-top: 2px;
     }
 
-    /* Detail Acara */
     .details-card {
       background: #f8fafc;
       border-radius: 18px;
@@ -292,7 +287,6 @@
       justify-content: center;
     }
 
-    /* Tombol Aksi */
     .btn {
       display: flex;
       align-items: center;
@@ -309,95 +303,11 @@
       transition: all 0.25s ease;
       box-shadow: 0 6px 18px rgba(79, 70, 229, 0.35);
       border: none;
-      cursor: pointer;
     }
 
     .btn:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 22px rgba(79, 70, 229, 0.45);
-    }
-
-    /* Panel Generator Tamu */
-    .generator-card {
-      margin-top: 24px;
-      background: rgba(255, 255, 255, 0.07);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 24px;
-      padding: 22px;
-      color: #ffffff;
-      text-align: left;
-    }
-
-    .generator-card h3 {
-      font-size: 15px;
-      font-weight: 700;
-      margin-bottom: 6px;
-      color: #f8fafc;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .generator-card p {
-      font-size: 12px;
-      color: #94a3b8;
-      margin-bottom: 14px;
-      line-height: 1.5;
-    }
-
-    .input-field {
-      width: 100%;
-      padding: 13px 16px;
-      border-radius: 12px;
-      border: 1px solid #475569;
-      background: rgba(15, 23, 42, 0.75);
-      color: #ffffff;
-      font-size: 14px;
-      outline: none;
-      margin-bottom: 10px;
-    }
-
-    .input-field:focus {
-      border-color: #818cf8;
-    }
-
-    .btn-group {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .btn-wa {
-      background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
-      box-shadow: 0 4px 14px rgba(34, 197, 94, 0.3);
-    }
-    .btn-copy {
-      background: rgba(255, 255, 255, 0.15);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: none;
-    }
-
-    .toast {
-      position: fixed;
-      bottom: 24px;
-      background: #10b981;
-      color: #ffffff;
-      padding: 10px 20px;
-      border-radius: 50px;
-      font-size: 13px;
-      font-weight: 600;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.3s ease;
-      pointer-events: none;
-      z-index: 99999;
-    }
-    .toast.show {
-      opacity: 1;
-      transform: translateY(0);
     }
 
     @keyframes spinGlow {
@@ -412,7 +322,7 @@
 </head>
 <body>
 
-  <!-- ================= COVER DEPAN (BUKA UNDANGAN) ================= -->
+  <!-- COVER DEPAN -->
   <div id="coverScreen">
     <div class="cover-badge">Official Invitation</div>
     <h1 class="cover-title">Tasyakuran Wisuda</h1>
@@ -428,7 +338,7 @@
     </button>
   </div>
 
-  <!-- ================= KARTU UTAMA ================= -->
+  <!-- KARTU UTAMA UNDANGAN -->
   <div class="container">
     <div class="card">
       <span class="badge">Official Invitation</span>
@@ -444,13 +354,11 @@
       <div class="subtitle">Perayaan Wisuda Sarjana</div>
       <div class="graduate-name">Bintang Islami, S.Kom.</div>
 
-      <!-- Kotak Tamu di Halaman Utama -->
       <div class="recipient-box">
         <div class="recipient-label">Turut Mengundang Kehadiran:</div>
         <div class="recipient-name" id="guestName">Tamu Undangan</div>
       </div>
 
-      <!-- Hitung Mundur -->
       <div class="countdown-container">
         <div class="countdown-box">
           <div class="countdown-number" id="days">0</div>
@@ -470,7 +378,6 @@
         </div>
       </div>
 
-      <!-- Rincian Acara -->
       <div class="details-card">
         <div class="details-item">
           <span class="details-icon">🎓</span>
@@ -494,34 +401,14 @@
         </div>
       </div>
 
-      <!-- Tombol Maps -->
       <a href="https://maps.app.goo.gl/AfNGh2tSTewBWKz17" target="_blank" rel="noopener noreferrer" class="btn">
         📍 Buka Peta Google Maps
       </a>
     </div>
-
-    <!-- PANEL GENERATOR LINK TAMU -->
-    <div class="generator-card">
-      <h3>✨ Generator Link Tamu</h3>
-      <p>Ketik nama tamu di bawah untuk langsung membuat tautan khusus dan kirim ke WhatsApp:</p>
-      
-      <input type="text" id="inputNama" class="input-field" placeholder="Contoh: Pak Budi Santoso / Siti & Partner">
-      
-      <div class="btn-group">
-        <button type="button" class="btn btn-wa" onclick="bagikanWhatsApp()">
-          💬 Kirim WhatsApp
-        </button>
-        <button type="button" class="btn btn-copy" onclick="salinLink()">
-          🔗 Salin Link
-        </button>
-      </div>
-    </div>
   </div>
 
-  <div id="toast" class="toast">Link berhasil disalin! 📋</div>
-
   <script>
-    // 1. Tangkap Nama Tamu dari Link (?to=Nama)
+    // 1. Ambil Nama Tamu dari Link (?to=Nama)
     const urlParams = new URLSearchParams(window.location.search);
     const guest = urlParams.get('to');
     if (guest) {
@@ -530,12 +417,10 @@
       document.getElementById('coverGuestName').innerText = decodedGuest;
     }
 
-    // 2. Fungsi Buka Undangan & Letuskan Confetti
+    // 2. Buka Undangan & Confetti
     function bukaUndangan() {
-      const cover = document.getElementById('coverScreen');
-      cover.classList.add('hide');
+      document.getElementById('coverScreen').classList.add('hide');
 
-      // Tembakkan confetti
       if (typeof confetti === 'function') {
         confetti({
           particleCount: 100,
@@ -545,67 +430,21 @@
       }
     }
 
-    // 3. Hitung Mundur (Target: 12 September 2026 08:00 WIB)
+    // 3. Countdown
     const targetDate = new Date('2026-09-12T08:00:00+07:00').getTime();
-
     function updateCountdown() {
       const now = new Date().getTime();
       const distance = targetDate - now;
 
       if (distance > 0) {
-        const d = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const s = Math.floor((distance % (1000 * 60)) / 1000);
-
-        document.getElementById('days').innerText = d;
-        document.getElementById('hours').innerText = h;
-        document.getElementById('minutes').innerText = m;
-        document.getElementById('seconds').innerText = s;
+        document.getElementById('days').innerText = Math.floor(distance / (1000 * 60 * 60 * 24));
+        document.getElementById('hours').innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        document.getElementById('minutes').innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        document.getElementById('seconds').innerText = Math.floor((distance % (1000 * 60)) / 1000);
       }
     }
     setInterval(updateCountdown, 1000);
     updateCountdown();
-
-    // 4. Bantuan Generator Link
-    function getGuestData() {
-      const nama = document.getElementById('inputNama').value.trim();
-      if (!nama) {
-        alert("Silakan ketik nama tamu terlebih dahulu!");
-        return null;
-      }
-      const baseUrl = window.location.origin + window.location.pathname;
-      return {
-        nama: nama,
-        url: `${baseUrl}?to=${encodeURIComponent(nama)}`
-      };
-    }
-
-    // 5. Kirim via WhatsApp
-    function bagikanWhatsApp() {
-      const data = getGuestData();
-      if (!data) return;
-
-      const pesan = `Kepada Yth. ${data.nama},\n\nTanpa mengurangi rasa hormat, kami bermaksud mengundang Anda untuk menghadiri perayaan Tasyakuran Wisuda saya:\n\n*Bintang Islami, S.Kom.*\nProgram Studi Sistem Informasi - Universitas Dharmas Indonesia\n\nUntuk detail acara lengkap, silakan buka tautan undangan berikut:\n${data.url}\n\nMerupakan suatu kehormatan dan kebahagiaan bagi kami apabila Anda berkenan hadir. Terima kasih!`;
-      
-      const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(pesan)}`;
-      window.open(waUrl, '_blank');
-    }
-
-    // 6. Salin Tautan (Copy Link)
-    function salinLink() {
-      const data = getGuestData();
-      if (!data) return;
-
-      navigator.clipboard.writeText(data.url).then(() => {
-        const toast = document.getElementById('toast');
-        toast.innerText = `Link untuk ${data.nama} berhasil disalin! 📋`;
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 3000);
-      }).catch(() => {
-        alert("Link: " + data.url);
-      });
-    }
   </script>
 
 </body>
